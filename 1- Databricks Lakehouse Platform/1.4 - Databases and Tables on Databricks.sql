@@ -195,7 +195,3 @@ DROP TABLE external_custom;
 
 -- MAGIC %python
 -- MAGIC display(dbutils.fs.ls(f'{external_location}/external_custom'))
-
--- COMMAND ----------
-
-
