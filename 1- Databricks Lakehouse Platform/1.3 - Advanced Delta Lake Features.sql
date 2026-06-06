@@ -5,11 +5,11 @@
 
 -- COMMAND ----------
 
-USE CATALOG hive_metastore
+DESCRIBE HISTORY employees
 
 -- COMMAND ----------
 
-DESCRIBE HISTORY employees
+select * from employees
 
 -- COMMAND ----------
 
@@ -30,7 +30,7 @@ SELECT * FROM employees
 
 -- COMMAND ----------
 
-RESTORE TABLE employees TO VERSION AS OF 5
+RESTORE TABLE employees TO VERSION AS OF 7
 
 -- COMMAND ----------
 
@@ -65,7 +65,7 @@ DESCRIBE HISTORY employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+select * from employees where id = 1
 
 -- COMMAND ----------
 
@@ -79,7 +79,7 @@ VACUUM employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+describe detail employees
 
 -- COMMAND ----------
 
@@ -87,7 +87,7 @@ VACUUM employees RETAIN 0 HOURS
 
 -- COMMAND ----------
 
-SET spark.databricks.delta.retentionDurationCheck.enabled = false;
+SET spark.databricks.delta.retentionDurationCheck.enabled = TRUE;
 
 -- COMMAND ----------
 
@@ -95,11 +95,13 @@ VACUUM employees RETAIN 0 HOURS
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+describe history employees
 
 -- COMMAND ----------
 
-SELECT * FROM employees@v1
+-- -- Note: You may still see results due to a cached version of the table in the cluster. Restart your cluster to verify the result.
+
+SELECT * FROM employees@v2
 
 -- COMMAND ----------
 
@@ -117,5 +119,4 @@ SELECT * FROM employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
 
