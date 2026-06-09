@@ -2,7 +2,7 @@
 -- MAGIC %md-sandbox
 -- MAGIC
 -- MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
--- MAGIC   <img src="https://raw.githubusercontent.com/derar-alhussein/Databricks-Certified-Data-Engineer-Associate/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
+-- MAGIC   <img src="https://raw.github.com/Jayanth-Coding/Databricks-Data-Engg-Assoc/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
 -- COMMAND ----------
@@ -11,12 +11,12 @@
 
 -- COMMAND ----------
 
-CREATE TABLE orders AS
+CREATE or replace TABLE orders AS
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 -- COMMAND ----------
 
-SELECT * FROM orders
+SELECT * FROM orders limit 5
 
 -- COMMAND ----------
 
@@ -28,9 +28,14 @@ SELECT * FROM orders
 CREATE OR REPLACE TABLE orders AS
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
+
 -- COMMAND ----------
 
 DESCRIBE HISTORY orders
+
+-- COMMAND ----------
+
+drop table orders
 
 -- COMMAND ----------
 
@@ -92,9 +97,17 @@ SELECT * FROM books_updates
 
 -- COMMAND ----------
 
+show tables
+
+-- COMMAND ----------
+
 MERGE INTO books b
 USING books_updates u
 ON b.book_id = u.book_id AND b.title = u.title
 WHEN NOT MATCHED AND u.category = 'Computer Science' THEN 
   INSERT *
+
+
+-- COMMAND ----------
+
 

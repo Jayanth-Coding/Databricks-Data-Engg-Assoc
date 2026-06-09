@@ -2,7 +2,7 @@
 -- MAGIC %md-sandbox
 -- MAGIC
 -- MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
--- MAGIC   <img src="https://raw.githubusercontent.com/derar-alhussein/Databricks-Certified-Data-Engineer-Associate/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
+-- MAGIC   <img src="https://raw.github.com/Jayanth-Coding/Databricks-Data-Engg-Assoc/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
 -- COMMAND ----------
@@ -21,6 +21,14 @@ SELECT * FROM customers
 
 -- COMMAND ----------
 
+desc customers;
+
+-- COMMAND ----------
+
+select profile:address:country from customers limit 5
+
+-- COMMAND ----------
+
 DESCRIBE customers
 
 -- COMMAND ----------
@@ -30,7 +38,7 @@ FROM customers
 
 -- COMMAND ----------
 
-SELECT from_json(profile) AS profile_struct
+SELECT profile,from_json(profile, 'schema') AS profile_struct
   FROM customers;
 
 -- COMMAND ----------
@@ -86,6 +94,10 @@ FROM orders
 
 -- COMMAND ----------
 
+select * from orders limit 5
+
+-- COMMAND ----------
+
 SELECT customer_id,
   collect_set(order_id) AS orders_set,
   collect_set(books.book_id) AS books_set
@@ -120,6 +132,7 @@ FROM (
   SELECT *, explode(books) AS book 
   FROM orders) o
 INNER JOIN books b
+
 ON o.book.book_id = b.book_id;
 
 SELECT * FROM orders_enriched
@@ -148,6 +161,7 @@ SELECT * FROM orders_updates
 
 SELECT * FROM orders 
 MINUS 
+
 SELECT * FROM orders_updates 
 
 -- COMMAND ----------

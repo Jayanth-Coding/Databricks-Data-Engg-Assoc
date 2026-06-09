@@ -26,8 +26,8 @@ def download_dataset(source, target):
 # COMMAND ----------
 
 data_source_uri = "s3://dalhussein-courses/datasets/bookstore/v1/"
-dataset_bookstore = 'dbfs:/mnt/demo-datasets/bookstore'
-data_catalog = 'hive_metastore'
+dataset_bookstore = 'abfss://datasource@dbrickssourcedir.dfs.core.windows.net/bookstore'
+data_catalog = 'demoworkspace'
 spark.conf.set(f"dataset.bookstore", dataset_bookstore)
 spark.conf.set("fs.s3a.endpoint", "s3.eu-west-3.amazonaws.com")
 spark.conf.set("fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.AnonymousAWSCredentialsProvider")
@@ -106,4 +106,8 @@ def load_new_json_data(all=False):
 
 download_dataset(data_source_uri, dataset_bookstore)
 set_current_catalog(data_catalog)
+
+
+# COMMAND ----------
+
 

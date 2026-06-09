@@ -2,7 +2,7 @@
 -- MAGIC %md-sandbox
 -- MAGIC
 -- MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
--- MAGIC   <img src="https://raw.githubusercontent.com/derar-alhussein/Databricks-Certified-Data-Engineer-Associate/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
+-- MAGIC   <img src="https://raw.github.com/Jayanth-Coding/Databricks-Data-Engg-Assoc/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
 -- COMMAND ----------
@@ -12,6 +12,10 @@
 -- COMMAND ----------
 
 SELECT * FROM orders
+
+-- COMMAND ----------
+
+select explode(books) from orders limit 5
 
 -- COMMAND ----------
 
@@ -45,6 +49,10 @@ WHERE size(multiple_copies) > 0;
 
 -- COMMAND ----------
 
+select * from orders limit 5
+
+-- COMMAND ----------
+
 SELECT
   order_id,
   books,
@@ -63,7 +71,6 @@ FROM orders;
 
 CREATE OR REPLACE FUNCTION get_url(email STRING)
 RETURNS STRING
-
 RETURN concat("https://www.", split(email, "@")[1])
 
 -- COMMAND ----------
@@ -99,4 +106,8 @@ FROM customers
 
 DROP FUNCTION get_url;
 DROP FUNCTION site_type;
+
+
+-- COMMAND ----------
+
 

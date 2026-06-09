@@ -2,7 +2,7 @@
 -- MAGIC %md-sandbox
 -- MAGIC
 -- MAGIC <div  style="text-align: center; line-height: 0; padding-top: 9px;">
--- MAGIC   <img src="https://raw.githubusercontent.com/derar-alhussein/Databricks-Certified-Data-Engineer-Associate/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
+-- MAGIC   <img src="https://raw.githubusercontent.com/Jayanth-Coding/Databricks-Data-Engg-Assoc/main/Includes/images/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
 -- COMMAND ----------
@@ -26,11 +26,15 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json`
 
 -- COMMAND ----------
 
-SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json`
+select count(*) from json.`${dataset.bookstore}/customers-json/export_002.json`
 
 -- COMMAND ----------
 
-SELECT * FROM json.`${dataset.bookstore}/customers-json`
+SELECT count(*) FROM json.`${dataset.bookstore}/customers-json/export_*.json`
+
+-- COMMAND ----------
+
+SELECT count(*) FROM json.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
 
@@ -41,6 +45,10 @@ SELECT count(*) FROM json.`${dataset.bookstore}/customers-json`
  SELECT *,
     input_file_name() source_file
   FROM json.`${dataset.bookstore}/customers-json`;
+
+-- COMMAND ----------
+
+select count(*) as total, input_file_name() as f, input_file_block_length() as b from json.`${dataset.bookstore}/customers-json` group by f, b
 
 -- COMMAND ----------
 
@@ -72,6 +80,10 @@ SELECT * FROM csv.`${dataset.bookstore}/books-csv`
 
 -- COMMAND ----------
 
+create table `books-csv-export_003` as select * from csv.`${dataset.bookstore}/books-csv/export_003.csv`
+
+-- COMMAND ----------
+
 CREATE TABLE books_csv
   (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
 USING CSV
@@ -84,6 +96,14 @@ LOCATION "${dataset.bookstore}/books-csv"
 -- COMMAND ----------
 
 SELECT * FROM books_csv
+
+-- COMMAND ----------
+
+CREATE TABLE BOOKS_TABLE_CREATION_TEST
+(BOOK_ID StRING, title string, author string, category sTRIng, price INT)
+using csv
+options(header='true', delimiter=';') location '${dataset.bookstore}/bookscsv/export_002.csv'
+
 
 -- COMMAND ----------
 
@@ -112,6 +132,28 @@ DESCRIBE EXTENDED books_csv
 -- MAGIC         .option('header', 'true')
 -- MAGIC         .option('delimiter', ';')
 -- MAGIC         .save(f"{dataset_bookstore}/books-csv"))
+-- MAGIC
+-- MAGIC
+-- MAGIC
+
+-- COMMAND ----------
+
+-- MAGIC %python
+-- MAGIC (
+-- MAGIC   spark.read.table("books_csv")
+-- MAGIC     .write
+-- MAGIC     .format("csv")
+-- MAGIC .mode('overwrite')
+-- MAGIC     .save(f"{dataset_bookstore}/books_csv_csv")
+-- MAGIC     )
+
+-- COMMAND ----------
+
+select * from csv.`${dataset.bookstore}/books_csv_csv`
+
+-- COMMAND ----------
+
+describe detail books_csv
 
 -- COMMAND ----------
 
@@ -168,5 +210,13 @@ SELECT * FROM books
 
 -- COMMAND ----------
 
+select * from books
+
+-- COMMAND ----------
+
 DESCRIBE EXTENDED books
+
+
+-- COMMAND ----------
+
 
